@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ module['name'] }}</title>
-</head>
-<body>
-    <h1>{{ module['name'] }}</h1>
-    <img src="{{ url_for('static', filename='images/' + module['image_filename']) }}" width="300">
-    <p><b>Минимальная ширина:</b> {{ module['width_min'] }} мм</p>
-    <p><b>Максимальная ширина:</b> {{ module['width_max'] }} мм</p>
-    <p><b>Минимальная высота:</b> {{ module['height_min'] }} мм</p>
-    <p><b>Максимальная высота:</b> {{ module['height_max'] }} мм</p>
-    <p><b>Глубина:</b> {{ module['depth'] }} мм</p>
-    <p><b>Базовая цена:</b> {{ module['base_price'] }} ₽</p>
-    <p><b>Опции:</b> {{ module['options'] }}</p>
-    <p><a href="{{ url_for('catalog') }}">Назад в каталог</a></p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Модуль{% endblock %}
+{% block content %}
+<h1>{{ module.name }}</h1>
+<p>Описание: {{ module.description }}</p>
+<a href="/module/{{ module.id }}/configure">Настроить</a>
+{% endblock %}

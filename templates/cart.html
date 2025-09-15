@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<h1>Смета</h1>
+<ul>
+  {% for item in cart %}
+    <li>{{ item.name }} — {{ item.price }} ₽</li>
+  {% endfor %}
+</ul>
+<h2>Сводка</h2>
+<p>Материалы: {{ summary.materials }} ₽</p>
+<p>Работа: {{ summary.work }} ₽</p>
+<p>Скидки: {{ summary.discounts }} ₽</p>
+<p><b>ИТОГО: {{ summary.total }} ₽</b></p>
+{% endblock %}

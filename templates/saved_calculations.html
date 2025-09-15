@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Сохранённые расчёты{% endblock %}
+{% block content %}
+<h1>Сохранённые расчёты</h1>
+<ul>
+  {% for calc in calculations %}
+    <li><a href="/calc/{{ calc.id }}">Расчёт #{{ calc.id }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Конфигуратор{% endblock %}
+{% block content %}
+<h1>Конфигуратор: {{ module.name }}</h1>
+<form method="post">
+    Размеры: <input type="text" name="size"><br>
+    Материал: <select name="material">
+        {% for m in materials %}
+          <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+    </select><br>
+    Фурнитура: <select name="hardware">
+        {% for h in hardware %}
+          <option value="{{ h }}">{{ h }}</option>
+        {% endfor %}
+    </select><br>
+    Количество: <input type="number" name="quantity" value="1"><br>
+    Опции: <input type="checkbox" name="frez"> Фрезеровка
+           <input type="checkbox" name="glass"> Стекло<br>
+    <button type="submit">Добавить в корзину</button>
+</form>
+{% endblock %}
