@@ -1,4 +1,4 @@
--- Таблица категорий
+-- categories
 DROP TABLE IF EXISTS categories;
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS categories (
     subcategory TEXT NOT NULL
 );
 
--- Таблица модулей
+-- modules
 DROP TABLE IF EXISTS modules;
 CREATE TABLE IF NOT EXISTS modules (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,20 +20,20 @@ CREATE TABLE IF NOT EXISTS modules (
     depth INTEGER,
     base_price REAL,
     image_filename TEXT,
-    options TEXT, -- JSON строка
+    options TEXT,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
--- Таблица материалов
+-- materials
 DROP TABLE IF EXISTS materials;
 CREATE TABLE IF NOT EXISTS materials (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    type TEXT NOT NULL, -- Пленка, пластик, дерево и т.д.
+    name TEXT NOT NULL UNIQUE,
+    type TEXT NOT NULL,
     price REAL NOT NULL
 );
 
--- Таблица цен (для модификаций модулей)
+-- prices (extra by module/material)
 DROP TABLE IF EXISTS prices;
 CREATE TABLE IF NOT EXISTS prices (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS prices (
     FOREIGN KEY (material_id) REFERENCES materials(id)
 );
 
--- Таблица ставок труда
+-- labor rates
 DROP TABLE IF EXISTS labor_rates;
 CREATE TABLE IF NOT EXISTS labor_rates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS labor_rates (
     FOREIGN KEY (module_id) REFERENCES modules(id)
 );
 
--- Таблица заказов
+-- orders
 DROP TABLE IF EXISTS orders;
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Таблица позиций заказа
+-- order items (с колонкой options для хранения JSON с опциями)
 DROP TABLE IF EXISTS order_items;
 CREATE TABLE IF NOT EXISTS order_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     depth INTEGER,
     material_id INTEGER,
     price REAL,
+    options TEXT,
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (module_id) REFERENCES modules(id),
     FOREIGN KEY (material_id) REFERENCES materials(id)

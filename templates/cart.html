@@ -1,15 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Корзина{% endblock %}
 {% block content %}
-<h1>Смета</h1>
+<h1>Смета / Корзина</h1>
+
+{% if cart %}
 <ul>
   {% for item in cart %}
-    <li>{{ item.name }} — {{ item.price }} ₽</li>
+    <li>
+      <b>{{ item.module_name }}</b> — {{ item.quantity }} шт — {{ item.total_price }} ₽<br>
+      Размеры: {{ item.width }}×{{ item.height }}×{{ item.depth }}<br>
+      Материал: {{ item.material }}; Фурнитура: {{ item.hardware }}<br>
+      Опции: {{ item.options }}<br>
+      <a href="{{ url_for('cart_remove', index=loop.index0) }}">Удалить</a>
+    </li>
   {% endfor %}
 </ul>
+
 <h2>Сводка</h2>
 <p>Материалы: {{ summary.materials }} ₽</p>
 <p>Работа: {{ summary.work }} ₽</p>
 <p>Скидки: {{ summary.discounts }} ₽</p>
 <p><b>ИТОГО: {{ summary.total }} ₽</b></p>
+
+<form action="{{ url_for('cart_save') }}" method="post">
+    Имя клиента: <input type="text" name="customer_name"><br>
+    <button type="submit">Сохранить расчёт (создать заказ)</button>
+</form>
+
+<p><a href="{{ url_for('cart_clear') }}">Очистить корзину</a></p>
+{% else %}
+<p>Корзина пуста.</p>
+{% endif %}
+
+<p><a href="{{ url_for('catalog') }}">Вернуться в каталог</a></p>
 {% endblock %}

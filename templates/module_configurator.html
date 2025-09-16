@@ -3,20 +3,30 @@
 {% block content %}
 <h1>Конфигуратор: {{ module.name }}</h1>
 <form method="post">
-    Размеры: <input type="text" name="size"><br>
-    Материал: <select name="material">
-        {% for m in materials %}
-          <option value="{{ m }}">{{ m }}</option>
-        {% endfor %}
+    Ширина (мм): <input type="number" name="width" value="{{ module.width_min or 0 }}"><br>
+    Высота (мм): <input type="number" name="height" value="{{ module.height_min or 0 }}"><br>
+    Глубина (мм): <input type="number" name="depth" value="{{ module.depth or 0 }}"><br>
+
+    Материал:
+    <select name="material">
+      {% for m in materials %}
+        <option value="{{ m }}">{{ m }}</option>
+      {% endfor %}
     </select><br>
-    Фурнитура: <select name="hardware">
-        {% for h in hardware %}
-          <option value="{{ h }}">{{ h }}</option>
-        {% endfor %}
+
+    Фурнитура:
+    <select name="hardware">
+      {% for h in hardware %}
+        <option value="{{ h }}">{{ h }}</option>
+      {% endfor %}
     </select><br>
-    Количество: <input type="number" name="quantity" value="1"><br>
-    Опции: <input type="checkbox" name="frez"> Фрезеровка
-           <input type="checkbox" name="glass"> Стекло<br>
+
+    Количество: <input type="number" name="quantity" value="1" min="1"><br>
+
+    Опции: <label><input type="checkbox" name="frez"> Фрезеровка</label>
+           <label><input type="checkbox" name="glass"> Стекло</label><br>
+
     <button type="submit">Добавить в корзину</button>
 </form>
+<p><a href="{{ url_for('catalog') }}">Назад в каталог</a></p>
 {% endblock %}

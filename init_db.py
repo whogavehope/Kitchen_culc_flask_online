@@ -1,13 +1,15 @@
 import sqlite3
 
-# Подключаемся к базе данных (файл database.db будет создан автоматически)
-connection = sqlite3.connect('database.db')
+DB_FILE = "database.db"
+SCHEMA_FILE = "schema.sql"
 
-# Открываем файл schema.sql и выполняем его скрипт
-with open('schema.sql') as f:
-    connection.executescript(f.read())
+def init_db():
+    conn = sqlite3.connect(DB_FILE)
+    with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
+        conn.executescript(f.read())
+    conn.commit()
+    conn.close()
+    print("DB initialized:", DB_FILE)
 
-# Сохраняем изменения и закрываем соединение
-connection.commit()
-connection.close()
-
+if __name__ == "__main__":
+    init_db()

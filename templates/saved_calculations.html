@@ -2,9 +2,18 @@
 {% block title %}Сохранённые расчёты{% endblock %}
 {% block content %}
 <h1>Сохранённые расчёты</h1>
+{% if calculations %}
 <ul>
-  {% for calc in calculations %}
-    <li><a href="/calc/{{ calc.id }}">Расчёт #{{ calc.id }}</a></li>
+  {% for c in calculations %}
+    <li>
+      <a href="{{ url_for('order_detail', order_id=c.id) }}">Расчёт #{{ c.id }}</a>
+      — {{ c.customer_name }} — {{ c.created_at }} — {{ c.total }} ₽
+      — <a href="{{ url_for('order_load', order_id=c.id) }}">Загрузить в корзину</a>
+    </li>
   {% endfor %}
 </ul>
+{% else %}
+<p>Нет сохранённых расчётов.</p>
+{% endif %}
+<p><a href="{{ url_for('catalog') }}">Назад в каталог</a></p>
 {% endblock %}

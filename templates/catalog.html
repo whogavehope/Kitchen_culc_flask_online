@@ -1,10 +1,22 @@
-{% extends "base.html" %}
-{% block title %}Каталог{% endblock %}
-{% block content %}
-<h1>Каталог модулей</h1>
-<ul>
-  {% for module in modules %}
-    <li><a href="/module/{{ module.id }}">{{ module.name }}</a></li>
-  {% endfor %}
-</ul>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог модулей</title>
+</head>
+<body>
+    <h1>Каталог модулей</h1>
+    <ul>
+        {% for module in modules %}
+            <li>
+                <img src="{{ url_for('static', filename='images/' + module['image_filename']) }}" width="100">
+                <a href="{{ url_for('module_detail', module_id=module['id']) }}">
+                    {{ module['name'] }}
+                </a>
+                <p>Цена: {{ module['base_price'] }} ₽</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{{ url_for('index') }}">На главную</a></p>
+</body>
+</html>
